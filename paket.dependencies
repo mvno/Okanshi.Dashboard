@@ -12,5 +12,6 @@ nuget Newtonsoft.Json 7.0.1 framework: >= net45
 nuget Owin 1.0 framework: >= net45
 nuget SourceLink.Fake
 nuget xunit
+nuget xunit.runner.console
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

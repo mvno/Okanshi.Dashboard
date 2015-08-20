@@ -41,6 +41,7 @@ NUGET
       xunit.extensibility.core (2.0.0)
     xunit.extensibility.core (2.0.0)
       xunit.abstractions (2.0.0)
+    xunit.runner.console (2.0.0)
 GITHUB
   remote: fsharp/FAKE
   specs:

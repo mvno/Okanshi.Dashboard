@@ -1,0 +1,8 @@
+Microsoft.Owin
+Microsoft.Owin.Host.HttpListener
+Microsoft.Owin.Hosting
+Nancy
+Nancy.Owin
+Nancy.Serialization.JsonNet
+Newtonsoft.Json
+Owin

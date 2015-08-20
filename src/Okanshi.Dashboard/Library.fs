@@ -1,4 +1,4 @@
-﻿namespace FSharp.ProjectTemplate
+namespace Okanshi.Dashboard
 
 /// Documentation for my library
 ///

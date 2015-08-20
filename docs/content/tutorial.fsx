@@ -10,8 +10,8 @@ Introducing your project
 Say more
 
 *)
-#r "FSharp.ProjectScaffold.dll"
-open FSharp.ProjectScaffold
+#r "Okanshi.Dashboard.dll"
+open Okanshi.Dashboard
 
 Library.hello 0
 (**

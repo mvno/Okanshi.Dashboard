@@ -1,6 +1,6 @@
-﻿module FSharp.ProjectScaffold.Tests
+module Okanshi.Dashboard.Tests
 
-open FSharp.ProjectTemplate
+open Okanshi.Dashboard
 open NUnit.Framework
 
 [<Test>]

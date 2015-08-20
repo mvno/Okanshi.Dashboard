@@ -35,7 +35,7 @@ let summary = "Dashboard for visualizing Okanshi metrics"
 
 // Longer description of the project
 // (used as a description for NuGet package; line breaks are automatically cleaned up)
-let description = "Project has no description; update build.fsx"
+let description = "Dashboard for visualizing Okanshi metrics"
 
 // List of author names (for NuGet package)
 let authors = [ "Telenor MVNO" ]

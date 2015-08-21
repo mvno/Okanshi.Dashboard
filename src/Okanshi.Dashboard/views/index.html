@@ -159,10 +159,10 @@
 				}
 
 				function updateMetrics(metricDiv, metrics) {
-					metricDiv.find(".average").text(metrics.average).removeAttr("class").addClass(isNaN(metrics.average) ? "notAvailable" : "");
-					metricDiv.find(".minimum").text(metrics.minimum).removeAttr("class").addClass(isNaN(metrics.minimum) ? "notAvailable" : "");
-					metricDiv.find(".maximum").text(metrics.maximum).removeAttr("class").addClass(isNaN(metrics.maximum) ? "notAvailable" : "");
-					metricDiv.find(".variance").text(metrics.variance).removeAttr("class").addClass(isNaN(metrics.variance) ? "notAvailable" : "");
+					metricDiv.find(".average").text(metrics.average).removeAttr("class").addClass(isNaN(metrics.average) ? "notAvailable average" : "average");
+					metricDiv.find(".minimum").text(metrics.minimum).removeAttr("class").addClass(isNaN(metrics.minimum) ? "notAvailable minimum" : "minimum");
+					metricDiv.find(".maximum").text(metrics.maximum).removeAttr("class").addClass(isNaN(metrics.maximum) ? "notAvailable maximum" : "maximum");
+					metricDiv.find(".variance").text(metrics.variance).removeAttr("class").addClass(isNaN(metrics.variance) ? "notAvailable variance" : "variance");
 				}
 
 				var id = "@Current.Name";

@@ -191,10 +191,19 @@
 						}
 
 						var refreshRate = "@Current.RefreshRate";
-						setTimeout(function() {
-							var graph = graphs.find(function (elem) { return elem.name === "Parsing file"; });
-							if (graph === undefined) return;
-							updateMetrics(graph.metricDiv, { average: 100, minimum: 50, maximum: 150, variance: 0.1 });
+						setTimeout(function () {
+							$.ajax({
+								url: "/instance/@Current.Name"
+							}).done(function(data) {
+								var metrics = data;
+								for (var name in metrics) {
+									if (!metrics.hasOwnProperty(name)) continue;
+									var metric = metrics[name];
+									var graph = graphs.find(function (elem) { return elem.name === name; });
+									if (graph === undefined) continue;
+									updateMetrics(graph.metricDiv, { average: metric.average, minimum: metric.minimum, maximum: metric.maximum, variance: metric.variance });
+								}
+							});
 						}, refreshRate * 1000);
 					}).fail(function(jqXHR, textStatus, errorThrown) {
 						console.log(textStatus);

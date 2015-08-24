@@ -71,7 +71,7 @@
 			var x = d3.time.scale()
 				.range([0, chartWidth])
 				.domain(d3.extent(e.measurements, function (d) { return d.time; }));
-			var y = d3.time.scale()
+			var y = d3.scale.linear()
 				.range([chartHeight, 0])
 				.domain(d3.extent(e.measurements, function (d) { return d.average; }));
 			var line = d3.svg.line()

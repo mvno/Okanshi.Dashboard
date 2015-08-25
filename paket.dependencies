@@ -11,6 +11,7 @@ nuget Nancy.Serialization.JsonNet 1.2.0 framework: >= net45
 nuget Newtonsoft.Json 7.0.1 framework: >= net45
 nuget Owin 1.0 framework: >= net45
 nuget SourceLink.Fake
+nuget Topshelf
 nuget xunit
 nuget xunit.runner.console
 

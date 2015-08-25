@@ -6,3 +6,4 @@ Nancy.Owin
 Nancy.Serialization.JsonNet
 Newtonsoft.Json
 Owin
+Topshelf

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Owin.Hosting;
+﻿using Topshelf;
 
 namespace Okanshi.Dashboard
 {
@@ -7,13 +6,21 @@ namespace Okanshi.Dashboard
 	{
 		public static void Main(string[] args)
 		{
-			var url = "http://+:13016";
-			using (WebApp.Start<Startup>(url))
-			{
-				Console.WriteLine("Running on {0}", url);
-				Console.WriteLine("Press enter to exit...");
-				Console.ReadLine();
-			}
+			HostFactory.Run(
+				x =>
+				{
+					x.Service<Startup>(
+						s =>
+						{
+							s.ConstructUsing(name => new Startup());
+							s.WhenStarted(su => su.Start());
+							s.WhenStopped(su => su.Stop());
+						});
+					x.RunAsLocalSystem();
+					x.SetDescription("Runs Okanshi dashboard");
+					x.SetServiceName("Okanshi.Dashboard");
+					x.SetDisplayName("Okanshi.Dashboard");
+				});
 		}
 	}
 }

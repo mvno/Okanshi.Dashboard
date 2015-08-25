@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.Owin.Hosting;
 using Owin;
 
@@ -15,8 +16,7 @@ namespace Okanshi.Dashboard
 
 		public void Start()
 		{
-			const string url = "http://+:13016";
-			webApp = WebApp.Start<Startup>(url);
+			webApp = WebApp.Start<Startup>(ConfigurationManager.AppSettings["dashboard.url"]);
 		}
 
 		public void Stop()

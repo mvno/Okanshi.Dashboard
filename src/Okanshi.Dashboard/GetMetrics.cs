@@ -47,7 +47,7 @@ namespace Okanshi.Dashboard
 					});
 			}
 
-			return Enumerable.Empty<Metric>();
-		} 
+			throw new InvalidOperationException("Not supported version");
+		}
 	}
 }

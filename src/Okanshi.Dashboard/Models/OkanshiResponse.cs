@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Okanshi.Dashboard
+namespace Okanshi.Dashboard.Models
 {
 	public class OkanshiResponse
 	{

@@ -13,10 +13,8 @@ namespace Okanshi.Dashboard
 			Get["/"] = p => View["index.html", storage.GetAll()];
 			Get["/instance/{instanceName}"] = p =>
 			{
-				var webClient = new WebClient();
-				var instanceName = p.instanceName.ToString();
-				var response = webClient.DownloadString(storage.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url);
-				var metrics = getMetrics.Deserialize(response);
+				string instanceName = p.instanceName.ToString();
+				var metrics = getMetrics.Execute(instanceName);
 				return Response.AsJson(metrics);
 			};
 		}

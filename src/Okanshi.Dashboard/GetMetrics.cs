@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Okanshi.Dashboard.Models;
@@ -9,13 +10,22 @@ namespace Okanshi.Dashboard
 {
 	public interface IGetMetrics
 	{
-		IEnumerable<Metric> Deserialize(string response);
+		IEnumerable<Metric> Execute(string instanceName);
 	}
 
 	public class GetMetrics : IGetMetrics
 	{
-		public IEnumerable<Metric> Deserialize(string response)
+		private readonly IStorage _storage;
+
+		public GetMetrics(IStorage storage)
 		{
+			_storage = storage;
+		}
+
+		public IEnumerable<Metric> Execute(string instanceName)
+		{
+			var webClient = new WebClient();
+			var response = webClient.DownloadString(_storage.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url);
 			var jObject = JObject.Parse(response);
 			JToken versionToken;
 			jObject.TryGetValue("version", out versionToken);

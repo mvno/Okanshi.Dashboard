@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using Nancy;
-using Newtonsoft.Json.Linq;
+﻿using Nancy;
+using Okanshi.Dashboard.Models;
 
 namespace Okanshi.Dashboard
 {
@@ -14,8 +11,8 @@ namespace Okanshi.Dashboard
 			Get["/instance/{instanceName}"] = p =>
 			{
 				string instanceName = p.instanceName.ToString();
-				var metrics = getMetrics.Execute(instanceName);
-				return Response.AsJson(metrics);
+				var service = new Service { Metrics = getMetrics.Execute(instanceName) };
+				return Response.AsJson(service);
 			};
 		}
 	}

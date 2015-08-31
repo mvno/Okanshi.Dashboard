@@ -52,7 +52,7 @@
 			div.append("p").html("Got error while getting data: " + error.statusText);
 			return;
 		}
-		var metrics = data.map(function(x) {
+		var metrics = data.Metrics.map(function(x) {
 			return {
 				name: x.Name,
 				measurements: mapMeasurement(x.Measurements, x.WindowSize)

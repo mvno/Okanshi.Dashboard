@@ -5,13 +5,16 @@ namespace Okanshi.Dashboard
 {
 	public class DashboardModule : NancyModule
 	{
-		public DashboardModule(IStorage storage, IGetMetrics getMetrics)
+		private readonly IGetHealthChecks _getHealthChecks;
+
+		public DashboardModule(IStorage storage, IGetMetrics getMetrics, IGetHealthChecks getHealthChecks)
 		{
+			_getHealthChecks = getHealthChecks;
 			Get["/"] = p => View["index.html", storage.GetAll()];
 			Get["/instance/{instanceName}"] = p =>
 			{
 				string instanceName = p.instanceName.ToString();
-				var service = new Service { Metrics = getMetrics.Execute(instanceName) };
+				var service = new Service { Metrics = getMetrics.Execute(instanceName), HealthChecks = _getHealthChecks.Execute(instanceName) };
 				return Response.AsJson(service);
 			};
 		}

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="GetHealthChecks.cs" />
     <Compile Include="GetMetrics.cs" />
     <Compile Include="InMemoryStorage.cs" />
     <Compile Include="Models\HealthCheck.cs" />

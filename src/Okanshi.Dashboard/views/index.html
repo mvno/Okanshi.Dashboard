@@ -47,7 +47,14 @@
 		var div = d3.select("body")
 			.append("div")
 				.attr("id", "@Current.Name");
-		div.append("h3").html("@Current.Name");
+		var headerDiv = div.append("div").attr("class", "header");
+		headerDiv.append("h3").html("@Current.Name");
+		var healthCheck = headerDiv.append("div");
+		if (_.some(data.HealthChecks, function(h) { return h.Success === false; })) {
+			healthCheck.attr("class", "circle error");
+		} else {
+			healthCheck.attr("class", "circle success");
+		}
 		if (error) {
 			div.append("p").html("Got error while getting data: " + error.statusText);
 			return;

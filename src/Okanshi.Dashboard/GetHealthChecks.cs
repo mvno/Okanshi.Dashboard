@@ -30,7 +30,7 @@ namespace Okanshi.Dashboard
 			var jObject = JObject.Parse(response);
 			JToken versionToken;
 			jObject.TryGetValue("version", out versionToken);
-			var version = versionToken.Value<string>() ?? "0";
+			var version = versionToken != null ? versionToken.Value<string>() ?? "0" : "0";
 
 			if (version.Equals("0", StringComparison.OrdinalIgnoreCase))
 			{

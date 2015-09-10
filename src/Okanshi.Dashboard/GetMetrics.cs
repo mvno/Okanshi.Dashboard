@@ -27,9 +27,7 @@ namespace Okanshi.Dashboard
 			var webClient = new WebClient();
 			var response = webClient.DownloadString(_storage.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url);
 			var jObject = JObject.Parse(response);
-			JToken versionToken;
-			jObject.TryGetValue("version", out versionToken);
-			var version = versionToken != null ? versionToken.Value<string>() ?? "0" : "0";
+			var version = jObject.GetValueOrDefault("version", "0");
 
 			if (version.Equals("0", StringComparison.OrdinalIgnoreCase))
 			{

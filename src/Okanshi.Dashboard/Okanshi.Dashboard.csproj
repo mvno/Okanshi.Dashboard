@@ -46,6 +46,7 @@
     <Compile Include="GetHealthChecks.cs" />
     <Compile Include="GetMetrics.cs" />
     <Compile Include="InMemoryStorage.cs" />
+    <Compile Include="JObjectExtensions.cs" />
     <Compile Include="Models\HealthCheck.cs" />
     <Compile Include="Models\Measurement.cs" />
     <Compile Include="Models\Metric.cs" />

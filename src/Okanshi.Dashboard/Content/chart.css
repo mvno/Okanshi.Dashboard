@@ -13,3 +13,24 @@
     font-size: 15px;
     fill: black;
 }
+
+div.header h3 {
+    display: inline;
+    margin-right: 0.5em;
+}
+
+.circle {
+    border-radius: 50%;
+    background-color: black;
+    height: 1em;
+    width: 1em;
+    display: inline-block;
+}
+
+.error {
+    background-color: red;
+}
+
+.success {
+    background-color: lawngreen;
+}

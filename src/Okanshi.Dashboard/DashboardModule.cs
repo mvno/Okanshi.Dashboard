@@ -1,23 +1,21 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using Nancy;
-using Newtonsoft.Json;
+﻿using Nancy;
+using Okanshi.Dashboard.Models;
 
 namespace Okanshi.Dashboard
 {
 	public class DashboardModule : NancyModule
 	{
-		public DashboardModule(IStorage storage)
+		private readonly IGetHealthChecks _getHealthChecks;
+
+		public DashboardModule(IStorage storage, IGetMetrics getMetrics, IGetHealthChecks getHealthChecks)
 		{
+			_getHealthChecks = getHealthChecks;
 			Get["/"] = p => View["index.html", storage.GetAll()];
 			Get["/instance/{instanceName}"] = p =>
 			{
-				var webClient = new WebClient();
-				var instanceName = p.instanceName.ToString();
-				var response = webClient.DownloadString(storage.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url);
-				object jsonObject = JsonConvert.DeserializeObject<dynamic>(response);
-				return Response.AsJson(jsonObject);
+				string instanceName = p.instanceName.ToString();
+				var service = new Service { Metrics = getMetrics.Execute(instanceName), HealthChecks = _getHealthChecks.Execute(instanceName) };
+				return Response.AsJson(service);
 			};
 		}
 	}

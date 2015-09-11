@@ -19,13 +19,13 @@
 		var duration = moment.duration(windowSize / 2);
 		var elements = [];
 		measurements.forEach(function (e, i, array) {
-			var time = moment(e.startTime).add(duration);
-			elements.push({ time: time.toDate(), average: e.average });
+			var time = moment(e.StartTime).add(duration);
+			elements.push({ time: time.toDate(), average: e.Average });
 			var nextIndex = i + 1;
 			if (array.length <= nextIndex) { return; }
 			var nextElement = array[nextIndex];
-			var nextStartTime = moment(nextElement.startTime);
-			var firstEmptyPointTime = moment(e.endTime).add(duration);
+			var nextStartTime = moment(nextElement.StartTime);
+			var firstEmptyPointTime = moment(e.EndTime).add(duration);
 			if (firstEmptyPointTime.isBefore(nextStartTime)) {
 				elements.push({ time: firstEmptyPointTime.toDate(), average: 0 });
 				var lastEmptyPointTime = nextStartTime.subtract(duration);
@@ -47,15 +47,22 @@
 		var div = d3.select("body")
 			.append("div")
 				.attr("id", "@Current.Name");
-		div.append("h3").html("@Current.Name");
+		var headerDiv = div.append("div").attr("class", "header");
+		headerDiv.append("h3").html("@Current.Name");
+		var healthCheck = headerDiv.append("div");
+		if (_.some(data.HealthChecks, function(h) { return h.Success === false; })) {
+			healthCheck.attr("class", "circle error");
+		} else {
+			healthCheck.attr("class", "circle success");
+		}
 		if (error) {
 			div.append("p").html("Got error while getting data: " + error.statusText);
 			return;
 		}
-		var metrics = _.keys(data).map(function(elm) {
+		var metrics = data.Metrics.map(function(x) {
 			return {
-				name: elm,
-				measurements: mapMeasurement(data[elm].measurements, data[elm].windowSize)
+				name: x.Name,
+				measurements: mapMeasurement(x.Measurements, x.WindowSize)
 			}
 		});
 		_.each(metrics, function (e) {

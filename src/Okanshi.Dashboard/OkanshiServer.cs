@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Okanshi.Dashboard
+﻿namespace Okanshi.Dashboard
 {
 	public class OkanshiServer
 	{

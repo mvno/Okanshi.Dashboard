@@ -6,5 +6,6 @@ namespace Okanshi.Dashboard
 	{
 		void Add(OkanshiServer server);
 		IEnumerable<OkanshiServer> GetAll();
+		void Remove(string name);
 	}
 }

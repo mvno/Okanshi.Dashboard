@@ -4,24 +4,24 @@ using System.Linq;
 
 namespace Okanshi.Dashboard
 {
-	public interface IStorage
+	public interface IConfiguration
 	{
 		void Add(OkanshiServer server);
 		IEnumerable<OkanshiServer> GetAll();
 	}
 
-	public class InMemoryStorage : IStorage
+	public class InMemoryConfiguration : IConfiguration
 	{
-		private static readonly List<OkanshiServer> storage = new List<OkanshiServer>(); 
+		private static readonly List<OkanshiServer> _configuration = new List<OkanshiServer>(); 
 
 		public void Add(OkanshiServer server)
 		{
-			storage.Add(server);
+			_configuration.Add(server);
 		}
 
 		public IEnumerable<OkanshiServer> GetAll()
 		{
-			return storage.ToArray();
+			return _configuration.ToArray();
 		}
 	}
 }

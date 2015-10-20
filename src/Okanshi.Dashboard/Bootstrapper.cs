@@ -8,7 +8,7 @@ namespace Okanshi.Dashboard
 		protected override void ConfigureApplicationContainer(TinyIoCContainer container)
 		{
 			base.ConfigureApplicationContainer(container);
-			container.Register<IStorage>(new InMemoryStorage());
+			container.Register<IConfiguration>(new InMemoryConfiguration());
 		}
 	}
 }

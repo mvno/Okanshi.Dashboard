@@ -15,17 +15,17 @@ namespace Okanshi.Dashboard
 
 	public class GetMetrics : IGetMetrics
 	{
-		private readonly IStorage _storage;
+		private readonly IConfiguration _configuration;
 
-		public GetMetrics(IStorage storage)
+		public GetMetrics(IConfiguration configuration)
 		{
-			_storage = storage;
+			_configuration = configuration;
 		}
 
 		public IEnumerable<Metric> Execute(string instanceName)
 		{
 			var webClient = new WebClient();
-			var response = webClient.DownloadString(_storage.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url);
+			var response = webClient.DownloadString(_configuration.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url);
 			var jObject = JObject.Parse(response);
 			var version = jObject.GetValueOrDefault("version", "0");
 

@@ -22,6 +22,12 @@ namespace Okanshi.Dashboard
 				configuration.Add(server);
 				return Response.AsRedirect("/settings");
 			};
+			Post["/settings/delete"] = p =>
+			{
+				var name = (string)Request.Form.InstanceName;
+				configuration.Remove(name);
+				return Response.AsRedirect("/settings");
+			};
 		}	
 	}
 }

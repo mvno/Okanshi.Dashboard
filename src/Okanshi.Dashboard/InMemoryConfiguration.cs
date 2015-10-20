@@ -4,12 +4,6 @@ using System.Linq;
 
 namespace Okanshi.Dashboard
 {
-	public interface IConfiguration
-	{
-		void Add(OkanshiServer server);
-		IEnumerable<OkanshiServer> GetAll();
-	}
-
 	public class InMemoryConfiguration : IConfiguration
 	{
 		private static readonly List<OkanshiServer> _configuration = new List<OkanshiServer>(); 

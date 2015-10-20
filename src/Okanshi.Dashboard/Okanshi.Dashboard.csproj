@@ -45,7 +45,8 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="GetHealthChecks.cs" />
     <Compile Include="GetMetrics.cs" />
-    <Compile Include="InMemoryStorage.cs" />
+    <Compile Include="IConfiguration.cs" />
+    <Compile Include="InMemoryConfiguration.cs" />
     <Compile Include="JObjectExtensions.cs" />
     <Compile Include="Models\HealthCheck.cs" />
     <Compile Include="Models\Measurement.cs" />

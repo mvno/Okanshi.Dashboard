@@ -8,6 +8,7 @@
 				<th>Name</th>
 				<th>Url</th>
 				<th>Refresh rate</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -15,7 +16,13 @@
 			<tr>
 				<td>@Current.Name</td>
 				<td>@Current.Url</td>
-				<td>@Current.RefreshRate</td>
+			    <td>@Current.RefreshRate</td>
+			    <td>
+			        <form action="/settings/delete" method="POST">
+			            <input type="hidden" name="instanceName" value="@Current.Name" />
+			            <button type="submit" class="btn btn-default">Slet</button>
+			        </form>
+			    </td>
 			</tr>
 			@EndEach
 		</tbody>

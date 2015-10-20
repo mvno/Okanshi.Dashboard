@@ -12,6 +12,7 @@ nuget Newtonsoft.Json 7.0.1 framework: >= net45
 nuget Owin 1.0 framework: >= net45
 nuget SourceLink.Fake
 nuget Topshelf
+nuget YamlDotNet
 nuget xunit
 nuget xunit.runner.console
 

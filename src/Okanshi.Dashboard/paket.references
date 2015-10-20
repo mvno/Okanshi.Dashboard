@@ -7,3 +7,4 @@ Nancy.Serialization.JsonNet
 Newtonsoft.Json
 Owin
 Topshelf
+YamlDotNet

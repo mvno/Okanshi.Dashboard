@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -37,6 +38,12 @@ namespace Okanshi.Dashboard
 		public IEnumerable<OkanshiServer> GetAll()
 		{
 			return OkanshiInstances;
+		}
+
+		public void Remove(string name)
+		{
+			OkanshiInstances = OkanshiInstances.Where(x => x.Name != name).ToList();
+			Save();
 		}
 
 		private void Save()

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Nancy;
-using Nancy.ModelBinding;
 
 namespace Okanshi.Dashboard
 {

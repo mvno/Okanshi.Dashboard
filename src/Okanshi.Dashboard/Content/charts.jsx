@@ -149,7 +149,8 @@ var OkanshiInstance = React.createClass({
             header: undefined,
             width: 250,
             height: 100,
-            ínstanceName: undefined
+            instanceName: undefined,
+            refreshRate: 10000
         };
     },
 
@@ -219,7 +220,8 @@ var InstanceList = React.createClass({
                     instances: _.map(data, function(x) {
                             return {
                                 name: x.Name,
-                                url: x.Url
+                                url: x.Url,
+                                refreshRate: x.RefreshRate
                             };
                         })
                 });
@@ -229,9 +231,10 @@ var InstanceList = React.createClass({
     render: function () {
         var self = this;
         var instances = _.map(self.state.instances, function(x) {
-            var name = x.name;
+            var name = x.name,
+                refreshRate = x.refreshRate * 1000;
             return (
-                <OkanshiInstance header={name} instanceName={name} key={name} />
+                <OkanshiInstance header={name} instanceName={name} key={name} refreshRate={refreshRate} />
             );
         });
         return (

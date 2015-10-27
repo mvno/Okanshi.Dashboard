@@ -40,12 +40,16 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet">
+      <HintPath>..\..\packages\YamlDotNet\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="GetHealthChecks.cs" />
     <Compile Include="GetMetrics.cs" />
-    <Compile Include="InMemoryStorage.cs" />
+    <Compile Include="IConfiguration.cs" />
     <Compile Include="JObjectExtensions.cs" />
     <Compile Include="Models\HealthCheck.cs" />
     <Compile Include="Models\Measurement.cs" />
@@ -61,6 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="config.yml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>

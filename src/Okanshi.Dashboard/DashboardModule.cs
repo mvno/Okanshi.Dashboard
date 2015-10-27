@@ -7,10 +7,10 @@ namespace Okanshi.Dashboard
 	{
 		private readonly IGetHealthChecks _getHealthChecks;
 
-		public DashboardModule(IStorage storage, IGetMetrics getMetrics, IGetHealthChecks getHealthChecks)
+		public DashboardModule(IConfiguration configuration, IGetMetrics getMetrics, IGetHealthChecks getHealthChecks)
 		{
 			_getHealthChecks = getHealthChecks;
-			Get["/"] = p => View["index.html", storage.GetAll()];
+			Get["/"] = p => View["index.html", configuration.GetAll()];
 			Get["/instance/{instanceName}"] = p =>
 			{
 				string instanceName = p.instanceName.ToString();

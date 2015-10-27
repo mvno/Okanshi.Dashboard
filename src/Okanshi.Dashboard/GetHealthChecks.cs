@@ -15,17 +15,17 @@ namespace Okanshi.Dashboard
 
 	public class GetHealthChecks : IGetHealthChecks
 	{
-		private readonly IStorage _storage;
+		private readonly IConfiguration _configuration;
 
-		public GetHealthChecks(IStorage storage)
+		public GetHealthChecks(IConfiguration configuration)
 		{
-			_storage = storage;
+			_configuration = configuration;
 		}
 
 		public IEnumerable<HealthCheck> Execute(string instanceName)
 		{
 			var webClient = new WebClient();
-			var url = _storage.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url;
+			var url = _configuration.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url;
 			var response = webClient.DownloadString(string.Format("{0}/healthchecks", url));
 			var jObject = JObject.Parse(response);
 			var version = jObject.GetValueOrDefault("version", "0");

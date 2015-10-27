@@ -1,32 +1,35 @@
-﻿using System;
-
-namespace Okanshi.Dashboard
+﻿namespace Okanshi.Dashboard
 {
 	public class OkanshiServer
 	{
+		public OkanshiServer()
+		{
+			RefreshRate = 10;
+		}
+
 		public OkanshiServer(string name, string url, long refreshRate)
 		{
 			Name = name;
 			RefreshRate = refreshRate;
-			Url = new Uri(url);
+			Url = url;
 		}
 
 		public string Name
 		{
 			get;
-			private set;
+			set;
 		}
 
-		public Uri Url
+		public string Url
 		{
 			get;
-			private set;
+			set;
 		}
 
 		public long RefreshRate
 		{
 			get;
-			private set;
+			set;
 		}
 	}
 }

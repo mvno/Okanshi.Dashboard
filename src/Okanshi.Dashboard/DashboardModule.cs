@@ -17,6 +17,7 @@ namespace Okanshi.Dashboard
 				var service = new Service { Metrics = getMetrics.Execute(instanceName), HealthChecks = _getHealthChecks.Execute(instanceName) };
 				return Response.AsJson(service);
 			};
+			Get["/instances"] = _ => Response.AsJson(configuration.GetAll());
 		}
 	}
 }

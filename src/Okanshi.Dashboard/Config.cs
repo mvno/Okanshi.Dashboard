@@ -22,6 +22,7 @@ namespace Okanshi.Dashboard
 		public Config()
 		{
 			_serializer = new Serializer(namingConvention: new CamelCaseNamingConvention());
+			OkanshiInstances = new List<OkanshiServer>();
 		}
 
 		public static Config Instance { get; private set; }

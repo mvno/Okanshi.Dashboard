@@ -11,7 +11,7 @@ namespace Okanshi.Dashboard
 		{
 			_getHealthChecks = getHealthChecks;
 			Get["/"] = p => View["index.html", configuration.GetAll()];
-			Get["/instance/{instanceName}"] = p =>
+			Get["/instances/{instanceName}"] = p =>
 			{
 				string instanceName = p.instanceName.ToString();
 				var service = new Service { Metrics = getMetrics.Execute(instanceName), HealthChecks = _getHealthChecks.Execute(instanceName) };

@@ -71,7 +71,7 @@
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\d3.jsx">
+    <None Include="Content\charts.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Content\chart.css">

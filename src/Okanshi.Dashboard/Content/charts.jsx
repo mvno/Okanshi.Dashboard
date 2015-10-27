@@ -171,6 +171,11 @@ var OkanshiInstance = React.createClass({
 
     componentDidMount: function () {
         this.getInstanceData();
+        this.timer = setInterval(this.getInstanceData, this.props.refreshRate);
+    },
+
+    componentWillUnmount : function() {
+        clearInterval(this.timer);
     },
 
     render: function () {

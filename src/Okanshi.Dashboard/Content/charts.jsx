@@ -161,7 +161,6 @@ var OkanshiInstance = React.createClass({
                 var metrics = data.Metrics,
                     healthChecks = data.HealthChecks,
                     windowSize = data.WindowSize;
-                console.log(metrics);
                 self.setState({
                     metrics: metrics,
                     healthChecks: healthChecks,

@@ -1,17 +1,17 @@
 ﻿.line {
-	fill: none;
-	stroke: steelblue;
-	stroke-width: 1.5px;
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
 }
 
 .chartdiv {
-	display: inline-block;
+    display: inline-block;
     width: 275px;
 }
 
-.chartdiv p {
-    margin-left: 1em;
-}
+    .chartdiv p {
+        margin-left: 1em;
+    }
 
 .chartText {
     font-family: sans-serif;

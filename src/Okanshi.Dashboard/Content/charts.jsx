@@ -244,5 +244,5 @@ var InstanceList = React.createClass({
 
 ReactDOM.render(
     <InstanceList />,
-    document.getElementById("test")
+    document.getElementById("chartContainer")
 );

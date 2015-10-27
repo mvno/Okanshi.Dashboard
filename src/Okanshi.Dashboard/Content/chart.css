@@ -5,7 +5,12 @@
 }
 
 .chartdiv {
-	display: inline;
+	display: inline-block;
+    width: 275px;
+}
+
+.chartdiv p {
+    margin-left: 1em;
 }
 
 .chartText {

@@ -38,7 +38,7 @@ namespace Okanshi.Dashboard
 
 		public IEnumerable<OkanshiServer> GetAll()
 		{
-			return OkanshiInstances;
+			return OkanshiInstances.OrderBy(x => x.Name);
 		}
 
 		public void Remove(string name)

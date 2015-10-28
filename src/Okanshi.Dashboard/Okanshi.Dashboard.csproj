@@ -68,12 +68,15 @@
     <None Include="config.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="paket.references" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Content\overview.jsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\charts.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="paket.references" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Content\chart.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

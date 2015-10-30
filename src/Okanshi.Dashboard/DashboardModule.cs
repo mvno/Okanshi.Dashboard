@@ -7,6 +7,7 @@ namespace Okanshi.Dashboard
 		public DashboardModule(IConfiguration configuration)
 		{
 			Get["/"] = p => View["index.html", configuration.GetAll()];
+			Get["/instances/{instanceName}"] = p => View["details.html", p.instanceName];
 		}
 	}
 }

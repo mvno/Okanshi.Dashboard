@@ -69,6 +69,9 @@
     <None Include="config.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\details.jsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\overview.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

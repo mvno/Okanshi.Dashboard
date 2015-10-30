@@ -1,6 +1,7 @@
 module.exports = {
     entry: {
         "./Content/overview": "./../../Content/overview.jsx",
+        "./Content/details": "./../../Content/details.jsx",
     },
     output: {
         path: __dirname,

@@ -69,7 +69,7 @@ var OkanshiInstance = React.createClass({
 
     getInstanceData: function () {
         var self = this;
-        $.getJSON("/instances/" + this.props.instanceName)
+        $.getJSON("/api/instances/" + this.props.instanceName)
             .done(function (data) {
                 var metrics = data.Metrics,
                     healthChecks = data.HealthChecks,
@@ -131,7 +131,7 @@ var InstanceList = React.createClass({
 
     getInstances: function () {
         var self = this;
-        $.getJSON("/instances")
+        $.getJSON("/api/instances")
             .done(function(data) {
                 self.setState({
                     instances: _.map(data, function(x) {

@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiModule.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="GetHealthChecks.cs" />

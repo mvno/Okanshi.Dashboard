@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Nancy;
 
 namespace Okanshi.Dashboard
@@ -11,7 +12,7 @@ namespace Okanshi.Dashboard
 			Get["/instances/{instanceName}"] = p =>
 			{
 				var instanceName = (string)p.instanceName;
-				var server = configuration.GetAll().Single(x => x.Name == instanceName);
+				var server = configuration.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase));
 				return View["details.html", server];
 			};
 		}

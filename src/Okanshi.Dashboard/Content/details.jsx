@@ -1,5 +1,77 @@
 ﻿var LineChart = require("./charts.jsx").LineChart;
 
+var HealthChecks = React.createClass({
+    getInitialState: function() {
+        return {
+            error: undefined,
+            data: undefined
+        };
+    },
+
+    componentDidMount: function() {
+        this.loadData();
+    },
+
+    loadData: function() {
+        var url = "/api/instances/" + this.props.instanceName + "/healthchecks";
+        d3.json(url, this.dataLoaded);
+    },
+
+    dataLoaded: function(err, data) {
+        if (err) {
+            this.setState({ error: err });
+        } else {
+            this.setState({ data: data });
+        }
+    },
+
+    render: function () {
+        var error = this.state.error,
+            data = this.state.data,
+            rows = undefined;
+        if (error !== undefined) {
+            return (
+                <div className="alert alert-danger" role="alert">
+                    {error}
+                </div>
+            );
+        }
+
+        if (data === undefined) {
+            return (
+                <p>Loading...</p>
+            );
+        }
+
+        if (_.isEmpty(data)) {
+            return (
+                <div className="alert alert-warning">No healthchecks defined</div>
+            );
+        }
+
+        rows = _.map(data, function (x) {
+            var success = x.Success === true,
+                status = success ? "OK" : "Failed",
+                rowClass = success ? "success" : "danger";
+            return (<tr key={x.Name} className={rowClass}><td>{x.Name}</td><td>{status}</td></tr>);
+        });
+
+        return (
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+        );
+    }
+});
+
 var Tab = React.createClass({
     getInitialState: function () {
         return {
@@ -56,14 +128,18 @@ var Tabs = React.createClass({
     }
 });
 
+var divElement = document.getElementById("test");
+var instanceName = divElement.getAttribute("data-name");
 var tabs = (
     <Tabs>
-        <Tab header="Health Checks" name="healthChecks" isActive={true}></Tab>
+        <Tab header="Health Checks" name="healthChecks" isActive={true}>
+            <HealthChecks instanceName={instanceName} />
+        </Tab>
         <Tab header="Metrics" name="metrics" />
     </Tabs>
 );
 
 ReactDOM.render(
     tabs,
-    document.getElementById("test")
+    divElement
 );

@@ -1,4 +1,5 @@
-﻿using Nancy;
+﻿using System.Linq;
+using Nancy;
 
 namespace Okanshi.Dashboard
 {
@@ -7,7 +8,12 @@ namespace Okanshi.Dashboard
 		public DashboardModule(IConfiguration configuration)
 		{
 			Get["/"] = p => View["index.html", configuration.GetAll()];
-			Get["/instances/{instanceName}"] = p => View["details.html", p.instanceName];
+			Get["/instances/{instanceName}"] = p =>
+			{
+				var instanceName = (string)p.instanceName;
+				var server = configuration.GetAll().Single(x => x.Name == instanceName);
+				return View["details.html", server];
+			};
 		}
 	}
 }

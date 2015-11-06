@@ -39,3 +39,17 @@ div.header h3 {
 .success {
     background-color: lawngreen;
 }
+
+.details select {
+    margin: 5px auto;
+    display: block
+}
+
+.details .chartdiv {
+    width: 100%;
+}
+
+.details svg {
+    display: block;
+    margin: 0 auto;
+}

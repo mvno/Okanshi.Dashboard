@@ -93,7 +93,8 @@ var OkanshiInstance = React.createClass({
 
     render: function () {
         var healthCheckClass,
-            self = this;
+            self = this,
+            instanceLink = "/instances/" + this.props.instanceName;
         if (_.some(self.state.healthChecks, function (h) { return h.Success === false; })) {
             healthCheckClass = "circle error";
         } else {
@@ -109,7 +110,7 @@ var OkanshiInstance = React.createClass({
         return (
             <div>
                 <div className="header">
-                    <h3>{self.props.header}</h3>
+                    <h3><a href={instanceLink}>{self.props.header}</a></h3>
                     <div className={healthCheckClass}></div>
                 </div>
                 {measurements}

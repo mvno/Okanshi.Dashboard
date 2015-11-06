@@ -69,15 +69,9 @@
     <None Include="config.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\details.jsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\overview.jsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\charts.jsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\details.jsx" />
+    <None Include="Content\overview.jsx" />
+    <None Include="Content\charts.jsx" />
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>

@@ -238,4 +238,8 @@
       </ItemGroup>
     </When>
   </Choose>
+  <PropertyGroup>
+    <PreBuildEvent>$(ProjectDir)\transformJsx.bat</PreBuildEvent>
+    <PreBuildEvent>$(SolutionDir)\node_modules\.bin\webpack.cmd --config $(ProjectDir)\webpack.config.js</PreBuildEvent>
+  </PropertyGroup>
 </Project>

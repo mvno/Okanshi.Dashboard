@@ -241,7 +241,7 @@ var Tabs = React.createClass({
     }
 });
 
-var divElement = document.getElementById("test");
+var divElement = document.getElementById("details");
 var instanceName = divElement.getAttribute("data-name");
 var tabs = (
     <Tabs>

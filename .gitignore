@@ -188,3 +188,5 @@ docs/content/license.md
 docs/content/release-notes.md
 *.svclog
 .fake
+src/Okanshi.Dashboard/Content/overview.js
+src/Okanshi.Dashboard/Content/details.js

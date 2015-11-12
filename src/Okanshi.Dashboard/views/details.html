@@ -1,0 +1,13 @@
+﻿@Master['master.html']
+
+@Section['Header']
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="/content/chart.css"/>
+@EndSection
+
+@Section['Content']
+<div id="details" data-name="@Model.Name"></div>
+<script src="/content/details.js"></script>
+@EndSection

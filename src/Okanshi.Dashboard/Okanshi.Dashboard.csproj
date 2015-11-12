@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiModule.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="GetHealthChecks.cs" />
@@ -68,13 +69,22 @@
     <None Include="config.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\details.jsx" />
+    <None Include="Content\overview.jsx" />
+    <None Include="Content\charts.jsx" />
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\charts.jsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="Content\chart.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\details.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\overview.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="views\details.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="views\settings.html">
@@ -222,4 +232,8 @@
       </ItemGroup>
     </When>
   </Choose>
+  <PropertyGroup>
+    <PreBuildEvent>$(ProjectDir)\transformJsx.bat</PreBuildEvent>
+    <PreBuildEvent>$(SolutionDir)\node_modules\.bin\webpack.cmd --config $(ProjectDir)\webpack.config.js</PreBuildEvent>
+  </PropertyGroup>
 </Project>

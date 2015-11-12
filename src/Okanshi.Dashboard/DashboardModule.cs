@@ -1,23 +1,20 @@
-﻿using Nancy;
-using Okanshi.Dashboard.Models;
+﻿using System;
+using System.Linq;
+using Nancy;
 
 namespace Okanshi.Dashboard
 {
 	public class DashboardModule : NancyModule
 	{
-		private readonly IGetHealthChecks _getHealthChecks;
-
-		public DashboardModule(IConfiguration configuration, IGetMetrics getMetrics, IGetHealthChecks getHealthChecks)
+		public DashboardModule(IConfiguration configuration)
 		{
-			_getHealthChecks = getHealthChecks;
 			Get["/"] = p => View["index.html", configuration.GetAll()];
 			Get["/instances/{instanceName}"] = p =>
 			{
-				string instanceName = p.instanceName.ToString();
-				var service = new Service { Metrics = getMetrics.Execute(instanceName), HealthChecks = _getHealthChecks.Execute(instanceName) };
-				return Response.AsJson(service);
+				var instanceName = (string)p.instanceName;
+				var server = configuration.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase));
+				return View["details.html", server];
 			};
-			Get["/instances"] = _ => Response.AsJson(configuration.GetAll());
 		}
 	}
 }

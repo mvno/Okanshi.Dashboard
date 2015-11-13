@@ -1,4 +1,5 @@
-﻿var LineChart = require("./charts.jsx").LineChart;
+﻿var React = require("react");
+var LineChart = require("./charts.jsx").LineChart;
 
 var Metrics = React.createClass({
     getInitialState: function() {

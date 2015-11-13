@@ -1,4 +1,6 @@
-﻿var LineChart = require("./charts.jsx").LineChart;
+﻿var React = require("react");
+var ReactDOM = require("react-dom");
+var LineChart = require("./charts.jsx").LineChart;
 
 var OkanshiMetric = React.createClass({
     getDefaultProps: function() {

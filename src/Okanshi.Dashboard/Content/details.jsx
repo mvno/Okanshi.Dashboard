@@ -35,9 +35,11 @@ var Metrics = React.createClass({
         var metric = _.find(this.state.data, function(x) {
             return x.Name === name;
         });
-        var measurements = metric.Measurements;
         var windowSize = metric.WindowSize;
-        measurements.reverse();
+        var measurements = [];
+        for (var i = metric.Measurements.length - 1; i >= 0; i--) {
+            measurements.push(metric.Measurements[i]);
+        }
         var duration = moment.duration(windowSize / 2);
         var elements = [];
         measurements.forEach(function (e, i, array) {

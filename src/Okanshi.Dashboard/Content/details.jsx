@@ -1,5 +1,7 @@
 ﻿var React = require("react");
+var ReactDOM = require("react-dom");
 var LineChart = require("./charts.jsx").LineChart;
+var ReactFauxDOM = require("react-faux-dom");
 
 var Metrics = React.createClass({
     getInitialState: function() {
@@ -99,7 +101,35 @@ var Metrics = React.createClass({
         var chart = null;
         if (this.state.selectedMetric !== "") {
             var measurements = this.mapMeasurement(this.state.selectedMetric);
-            chart = (<LineChart data={measurements} width={1000} height={600} graphSize={graphSize} />);
+
+            var margin = { top: 0, right: 20, left: 20, bottom: 30 };
+
+            var xScale = d3.time.scale()
+                .range([0, graphSize.width])
+                .domain(d3.extent(measurements, function (d) { return d.x; }));
+
+            var yScale = d3.scale.linear()
+                .range([graphSize.height, 0])
+                .domain(d3.extent(measurements, function (d) { return d.y; }));
+
+            var lineFunction = d3.svg.line()
+                .x(function(d) { return xScale(d.x); })
+                .y(function(d) { return yScale(d.y); });
+
+            var svg = d3.select(ReactFauxDOM.createElement("svg"))
+                .attr("width", 1000)
+                .attr("height", 600);
+
+            svg.append("g")
+                .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
+                .append("path")
+                .attr("fill", "none")
+                .attr("stroke", "blue")
+                .attr("stroke-width", 1)
+                .datum(measurements)
+                .attr("d", lineFunction);
+
+            chart = svg.node().toReact();
         }
 
         return (

@@ -53,3 +53,17 @@ div.header h3 {
     display: block;
     margin: 0 auto;
 }
+
+.axis path, .axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis path {
+    display: none;
+}
+
+.axis {
+    font: 10px sans-serif;
+}

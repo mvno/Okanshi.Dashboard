@@ -97,35 +97,56 @@ var Metrics = React.createClass({
             return (<option value={x.Name} key={x.Name}>{x.Name}</option>);
         });
 
-        var graphSize = { height: 575, width: 975 };
         var chart = null;
         if (this.state.selectedMetric !== "") {
             var measurements = this.mapMeasurement(this.state.selectedMetric);
-
-            var margin = { top: 0, right: 20, left: 20, bottom: 30 };
+            var margin = { top: 10, right: 20, left: 50, bottom: 30 };
+            var height = 600 - margin.top - margin.bottom;
+            var width = 1000 - margin.left - margin.right;
 
             var xScale = d3.time.scale()
-                .range([0, graphSize.width])
+                .range([0, width])
                 .domain(d3.extent(measurements, function (d) { return d.x; }));
 
             var yScale = d3.scale.linear()
-                .range([graphSize.height, 0])
+                .range([height, 0])
                 .domain(d3.extent(measurements, function (d) { return d.y; }));
+
+            var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left");
 
             var lineFunction = d3.svg.line()
                 .x(function(d) { return xScale(d.x); })
-                .y(function(d) { return yScale(d.y); });
+                .y(function (d) { return yScale(d.y); });
 
             var svg = d3.select(ReactFauxDOM.createElement("svg"))
-                .attr("width", 1000)
-                .attr("height", 600);
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom);
 
-            svg.append("g")
-                .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
-                .append("path")
-                .attr("fill", "none")
-                .attr("stroke", "blue")
-                .attr("stroke-width", 1)
+            var chart2 = svg.append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            chart2.append("rect")
+                .attr("class", "overlay")
+                .attr("width", width)
+                .attr("height", height);
+
+            chart2.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            chart2.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+
+            chart2.append("path")
+                .attr("class", "line")
                 .datum(measurements)
                 .attr("d", lineFunction);
 

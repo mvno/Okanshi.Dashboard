@@ -10,7 +10,7 @@ namespace Okanshi.Dashboard
 {
 	public interface IGetMetrics
 	{
-		IEnumerable<Metric> Execute(string instanceName);
+		IEnumerable<OkanshiMetric> Execute(string instanceName);
 	}
 
 	public class GetMetrics : IGetMetrics
@@ -22,7 +22,7 @@ namespace Okanshi.Dashboard
 			_configuration = configuration;
 		}
 
-		public IEnumerable<Metric> Execute(string instanceName)
+		public IEnumerable<OkanshiMetric> Execute(string instanceName)
 		{
 			var webClient = new WebClient();
 			var response = webClient.DownloadString(_configuration.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url);
@@ -33,10 +33,10 @@ namespace Okanshi.Dashboard
 			{
 				var deserializeObject = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(response);
 				return deserializeObject
-					.Select(x => new Metric
+					.Select(x => new OkanshiMetric
 					{
 						Name = x.Key,
-						Measurements = x.Value.measurements.ToObject<IEnumerable<Measurement>>(),
+						Measurements = x.Value.measurements.ToObject<IEnumerable<OkanshiMeasurement>>(),
 						WindowSize = x.Value.windowSize.ToObject<float>()
 					});
 			}

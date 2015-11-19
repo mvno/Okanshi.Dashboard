@@ -27,11 +27,23 @@ namespace Okanshi.Dashboard
 			var webClient = new WebClient();
 			var response = webClient.DownloadString(_configuration.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url);
 			var jObject = JObject.Parse(response);
-			var version = jObject.GetValueOrDefault("version", "0");
+			var version = jObject.GetValueOrDefault("Version", "-1");
+
+			if (version.Equals("-1", StringComparison.OrdinalIgnoreCase))
+			{
+				var deserializeObject = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(response);
+				return deserializeObject
+					.Select(x => new OkanshiMetric
+					{
+						Name = x.Key,
+						Measurements = x.Value.measurements.ToObject<IEnumerable<OkanshiMeasurement>>(),
+						WindowSize = x.Value.windowSize.ToObject<long>()
+					});
+			}
 
 			if (version.Equals("0", StringComparison.OrdinalIgnoreCase))
 			{
-				var deserializeObject = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(response);
+				var deserializeObject = jObject.GetValue("Data").ToObject<IDictionary<string, dynamic>>();
 				return deserializeObject
 					.Select(x => new OkanshiMetric
 					{

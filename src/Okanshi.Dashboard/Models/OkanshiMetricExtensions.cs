@@ -8,7 +8,15 @@ namespace Okanshi.Dashboard.Models
 	{
 		public static Metric ToMetric(this OkanshiMetric metric)
 		{
-			return new Metric { Name = metric.Name, WindowSize = metric.WindowSize, Measurements = metric.Measurements == null ? Enumerable.Empty<Measurement<DateTime, decimal>>() : metric.Measurements.ToMeasurements(metric.WindowSize).ToArray() };
+			return new Metric
+			{
+				Name = metric.Name,
+				WindowSize = metric.WindowSize,
+				Measurements =
+					metric.Measurements == null
+						? Enumerable.Empty<Measurement<DateTime, decimal>>()
+						: metric.Measurements.ToMeasurements(metric.WindowSize).ToArray()
+			};
 		}
 
 		private static IEnumerable<Measurement<DateTime, decimal>> ToMeasurements(this IEnumerable<OkanshiMeasurement> measurements, double windowSize)

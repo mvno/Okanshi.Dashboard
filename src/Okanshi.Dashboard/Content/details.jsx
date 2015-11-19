@@ -131,11 +131,6 @@ var Metrics = React.createClass({
             var chart2 = svg.append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            chart2.append("rect")
-                .attr("class", "overlay")
-                .attr("width", width)
-                .attr("height", height);
-
             chart2.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")

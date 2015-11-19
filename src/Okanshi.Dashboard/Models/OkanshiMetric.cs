@@ -6,6 +6,6 @@ namespace Okanshi.Dashboard.Models
 	{
 		public string Name { get; set; }
 		public IEnumerable<OkanshiMeasurement> Measurements { get; set; }
-		public float WindowSize { get; set; }
+		public long WindowSize { get; set; }
 	}
 }

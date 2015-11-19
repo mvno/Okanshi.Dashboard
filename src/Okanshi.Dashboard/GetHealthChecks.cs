@@ -32,7 +32,7 @@ namespace Okanshi.Dashboard
 
 			if (version.Equals("0", StringComparison.OrdinalIgnoreCase))
 			{
-				var deserializeObject = JsonConvert.DeserializeObject<IDictionary<string, bool>>(response);
+				var deserializeObject = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(response);
 				return deserializeObject
 					.Select(x => new HealthCheck
 					{

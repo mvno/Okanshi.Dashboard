@@ -37,7 +37,7 @@ namespace Okanshi.Dashboard
 					{
 						Name = x.Key,
 						Measurements = x.Value.measurements.ToObject<IEnumerable<OkanshiMeasurement>>(),
-						WindowSize = x.Value.windowSize.ToObject<float>()
+						WindowSize = x.Value.windowSize.ToObject<long>()
 					});
 			}
 

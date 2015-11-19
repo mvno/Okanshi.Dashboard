@@ -52,7 +52,7 @@ namespace Okanshi.Dashboard
 					});
 			}
 
-			return Enumerable.Empty<HealthCheck>();
+			throw new InvalidOperationException("Not supported version");
 		}
 	}
 }

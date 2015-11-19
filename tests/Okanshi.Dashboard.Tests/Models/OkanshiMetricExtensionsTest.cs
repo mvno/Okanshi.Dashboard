@@ -118,14 +118,15 @@ namespace Okanshi.Dashboard.Tests.Models
 			var now = DateTime.Now;
 			var okanshiMeasurements = new[]
 			{
-				new OkanshiMeasurement { StartTime = now.AddHours(-1), EndTime = now.AddHours(-1).AddMilliseconds(windowSize) },
-				new OkanshiMeasurement { StartTime = now, EndTime = now.AddMilliseconds(windowSize) }
+				new OkanshiMeasurement { StartTime = now.AddHours(-1), EndTime = now.AddHours(-1).AddMilliseconds(windowSize), Average = 100 },
+				new OkanshiMeasurement { StartTime = now, EndTime = now.AddMilliseconds(windowSize), Average = 100 }
 			};
 			var okanshiMetric = new OkanshiMetric { Measurements = okanshiMeasurements, WindowSize = windowSize };
 
 			var measurements = okanshiMetric.ToMetric().Measurements.ToArray();
 
-			true.Should().BeFalse();
+			measurements.Skip(1).Take(2).Should().OnlyContain(x => x.Y == 0);
+			measurements.Skip(3).Take(1).Should().OnlyContain(x => x.Y != 0);
 		}
 	}
 }

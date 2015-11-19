@@ -33,42 +33,6 @@ var Metrics = React.createClass({
         this.setState({ selectedMetric: event.target.value });
     },
 
-    mapMeasurement: function (name) {
-        var metric = _.find(this.state.data, function(x) {
-            return x.Name === name;
-        });
-        var windowSize = metric.WindowSize;
-        var measurements = [];
-        for (var i = metric.Measurements.length - 1; i >= 0; i--) {
-            measurements.push(metric.Measurements[i]);
-        }
-        var duration = moment.duration(windowSize / 2);
-        var elements = [];
-        measurements.forEach(function (e, i, array) {
-            var time = moment(e.StartTime).add(duration);
-            elements.push({ x: time.toDate(), y: e.Average });
-            var nextIndex = i + 1;
-            if (array.length <= nextIndex) { return; }
-            var nextElement = array[nextIndex];
-            var nextStartTime = moment(nextElement.StartTime);
-            var firstEmptyPointTime = moment(e.EndTime).add(duration);
-            if (firstEmptyPointTime.isBefore(nextStartTime)) {
-                elements.push({ x: firstEmptyPointTime.toDate(), y: 0 });
-                var lastEmptyPointTime = nextStartTime.subtract(duration);
-                if (lastEmptyPointTime.isAfter(firstEmptyPointTime)) {
-                    elements.push({ x: lastEmptyPointTime.toDate(), y: 0 });
-                }
-            }
-        });
-        var max = d3.max(elements, function (d) { return d.x; });
-        var current = new Date();
-        if (max < current) {
-            var time = moment(max).add(duration).toDate();
-            elements.push({ x: time, y: 0 }, { x: current, y: 0 });
-        }
-        return elements;
-    },
-
     render: function() {
         var error = this.state.error,
             data = this.state.data;
@@ -99,7 +63,13 @@ var Metrics = React.createClass({
 
         var chart = null;
         if (this.state.selectedMetric !== "") {
-            var measurements = this.mapMeasurement(this.state.selectedMetric);
+            var name = this.state.selectedMetric;
+            var metric = _.find(this.state.data, function (x) {
+                return x.Name === name;
+            });
+            var measurements = _.map(metric.Measurements, function(elm) {
+                return { x: moment(elm.X).toDate(), y: elm.Y };
+            });
             var margin = { top: 10, right: 20, left: 50, bottom: 30 };
             var height = 600 - margin.top - margin.bottom;
             var width = 1000 - margin.left - margin.right;

@@ -10,7 +10,7 @@ namespace Okanshi.Dashboard
 {
 	public interface IGetMetrics
 	{
-		IEnumerable<OkanshiMetric> Execute(string instanceName);
+		IEnumerable<Metric> Execute(string instanceName);
 	}
 
 	public class GetMetrics : IGetMetrics
@@ -22,7 +22,7 @@ namespace Okanshi.Dashboard
 			_configuration = configuration;
 		}
 
-		public IEnumerable<OkanshiMetric> Execute(string instanceName)
+		public IEnumerable<Metric> Execute(string instanceName)
 		{
 			var webClient = new WebClient();
 			var response = webClient.DownloadString(_configuration.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url);
@@ -38,7 +38,7 @@ namespace Okanshi.Dashboard
 						Name = x.Key,
 						Measurements = x.Value.measurements.ToObject<IEnumerable<OkanshiMeasurement>>(),
 						WindowSize = x.Value.windowSize.ToObject<long>()
-					});
+					}.ToMetric());
 			}
 
 			if (version.Equals("0", StringComparison.OrdinalIgnoreCase))
@@ -50,7 +50,7 @@ namespace Okanshi.Dashboard
 						Name = x.Key,
 						Measurements = x.Value.measurements.ToObject<IEnumerable<OkanshiMeasurement>>(),
 						WindowSize = x.Value.windowSize.ToObject<long>()
-					});
+					}.ToMetric());
 			}
 
 			throw new InvalidOperationException("Not supported version");

@@ -13,39 +13,13 @@ var OkanshiMetric = React.createClass({
         };
     },
 
-    mapMeasurement: function () {
-        this.props.measurements.reverse();
-        var duration = moment.duration(this.props.windowSize / 2);
-        var elements = [];
-        this.props.measurements.forEach(function (e, i, array) {
-            var time = moment(e.StartTime).add(duration);
-            elements.push({ x: time.toDate(), y: e.Average });
-            var nextIndex = i + 1;
-            if (array.length <= nextIndex) { return; }
-            var nextElement = array[nextIndex];
-            var nextStartTime = moment(nextElement.StartTime);
-            var firstEmptyPointTime = moment(e.EndTime).add(duration);
-            if (firstEmptyPointTime.isBefore(nextStartTime)) {
-                elements.push({ x: firstEmptyPointTime.toDate(), y: 0 });
-                var lastEmptyPointTime = nextStartTime.subtract(duration);
-                if (lastEmptyPointTime.isAfter(firstEmptyPointTime)) {
-                    elements.push({ x: lastEmptyPointTime.toDate(), y: 0 });
-                }
-            }
-        });
-        var max = d3.max(elements, function (d) { return d.x; });
-        var current = new Date();
-        if (max < current) {
-            var time = moment(max).add(duration).toDate();
-            elements.push({ x: time, y: 0 }, { x: current, y: 0 });
-        }
-        return elements;
-    },
-
     render: function () {
         var graphSize = { height: 75, width: 200 };
+        var measurements = _.map(this.props.measurements, function (elm) {
+            return { x: moment(elm.X).toDate(), y: elm.Y };
+        });
         return (
-            <LineChart data={this.mapMeasurement(this.props.measurements)} width={this.props.width} height={this.props.height} header={this.props.name} graphSize={graphSize} />
+            <LineChart data={measurements} width={this.props.width} height={this.props.height} header={this.props.name} graphSize={graphSize} />
         );
     }
 });

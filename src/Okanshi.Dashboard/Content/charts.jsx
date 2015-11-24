@@ -1,4 +1,6 @@
-﻿var Chart = React.createClass({
+﻿var React = require("react");
+
+var Chart = React.createClass({
     getDefaultProps: function() {
         return {
             margin: { top: 0, right: 20, left: 20, bottom: 30 }

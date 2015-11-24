@@ -55,6 +55,9 @@
     <Compile Include="Models\HealthCheck.cs" />
     <Compile Include="Models\Measurement.cs" />
     <Compile Include="Models\Metric.cs" />
+    <Compile Include="Models\OkanshiMeasurement.cs" />
+    <Compile Include="Models\OkanshiMetric.cs" />
+    <Compile Include="Models\OkanshiMetricExtensions.cs" />
     <Compile Include="Models\OkanshiResponse.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="OkanshiServer.cs" />
@@ -106,6 +109,10 @@
   </Target>
   -->
   <Import Project="..\..\.paket\paket.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>$(ProjectDir)\transformJsx.bat</PreBuildEvent>
+    <PreBuildEvent>$(ProjectDir)..\..\node_modules\.bin\webpack.cmd --config $(ProjectDir)webpack.config.js</PreBuildEvent>
+  </PropertyGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
       <ItemGroup>
@@ -182,24 +189,6 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch') Or ($(TargetFrameworkIdentifier) == 'Xamarin.iOS') Or ($(TargetFrameworkIdentifier) == 'Xamarin.Mac')">
-      <ItemGroup>
-        <Reference Include="Newtonsoft.Json">
-          <HintPath>..\..\packages\Newtonsoft.Json\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="($(TargetFrameworkIdentifier) == 'WindowsPhoneApp') Or ($(TargetFrameworkIdentifier) == '.NETCore') Or ($(TargetFrameworkIdentifier) == 'Silverlight' And $(TargetFrameworkVersion) == 'v5.0') Or ($(TargetFrameworkIdentifier) == 'WindowsPhone' And ($(TargetFrameworkVersion) == 'v8.0' Or $(TargetFrameworkVersion) == 'v8.1'))">
-      <ItemGroup>
-        <Reference Include="Newtonsoft.Json">
-          <HintPath>..\..\packages\Newtonsoft.Json\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
   </Choose>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
@@ -232,8 +221,4 @@
       </ItemGroup>
     </When>
   </Choose>
-  <PropertyGroup>
-    <PreBuildEvent>$(ProjectDir)\transformJsx.bat</PreBuildEvent>
-    <PreBuildEvent>$(ProjectDir)..\..\node_modules\.bin\webpack.cmd --config $(ProjectDir)webpack.config.js</PreBuildEvent>
-  </PropertyGroup>
 </Project>

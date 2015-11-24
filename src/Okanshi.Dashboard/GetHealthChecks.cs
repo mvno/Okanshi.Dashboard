@@ -28,9 +28,9 @@ namespace Okanshi.Dashboard
 			var url = _configuration.GetAll().Single(x => x.Name.Equals(instanceName, StringComparison.OrdinalIgnoreCase)).Url;
 			var response = webClient.DownloadString(string.Format("{0}/healthchecks", url));
 			var jObject = JObject.Parse(response);
-			var version = jObject.GetValueOrDefault("version", "0");
+			var version = jObject.GetValueOrDefault("Version", "-1");
 
-			if (version.Equals("0", StringComparison.OrdinalIgnoreCase))
+			if (version.Equals("-1", StringComparison.OrdinalIgnoreCase))
 			{
 				var deserializeObject = JsonConvert.DeserializeObject<IDictionary<string, bool>>(response);
 				return deserializeObject
@@ -40,8 +40,19 @@ namespace Okanshi.Dashboard
 						Success = x.Value,
 					});
 			}
+			 
+			if (version.Equals("0", StringComparison.OrdinalIgnoreCase))
+			{
+				var deserializeObject = jObject.GetValue("Data").ToObject<IDictionary<string, bool>>();
+				return deserializeObject
+					.Select(x => new HealthCheck
+					{
+						Name = x.Key,
+						Success = x.Value,
+					});
+			}
 
-			return Enumerable.Empty<HealthCheck>();
+			throw new InvalidOperationException("Not supported version");
 		}
 	}
 }

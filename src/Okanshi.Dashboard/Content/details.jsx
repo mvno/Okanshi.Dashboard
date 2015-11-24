@@ -1,4 +1,7 @@
-﻿var LineChart = require("./charts.jsx").LineChart;
+﻿var React = require("react");
+var ReactDOM = require("react-dom");
+var LineChart = require("./charts.jsx").LineChart;
+var ReactFauxDOM = require("react-faux-dom");
 
 var Metrics = React.createClass({
     getInitialState: function() {
@@ -30,40 +33,6 @@ var Metrics = React.createClass({
         this.setState({ selectedMetric: event.target.value });
     },
 
-    mapMeasurement: function (name) {
-        var metric = _.find(this.state.data, function(x) {
-            return x.Name === name;
-        });
-        var measurements = metric.Measurements;
-        var windowSize = metric.WindowSize;
-        measurements.reverse();
-        var duration = moment.duration(windowSize / 2);
-        var elements = [];
-        measurements.forEach(function (e, i, array) {
-            var time = moment(e.StartTime).add(duration);
-            elements.push({ x: time.toDate(), y: e.Average });
-            var nextIndex = i + 1;
-            if (array.length <= nextIndex) { return; }
-            var nextElement = array[nextIndex];
-            var nextStartTime = moment(nextElement.StartTime);
-            var firstEmptyPointTime = moment(e.EndTime).add(duration);
-            if (firstEmptyPointTime.isBefore(nextStartTime)) {
-                elements.push({ x: firstEmptyPointTime.toDate(), y: 0 });
-                var lastEmptyPointTime = nextStartTime.subtract(duration);
-                if (lastEmptyPointTime.isAfter(firstEmptyPointTime)) {
-                    elements.push({ x: lastEmptyPointTime.toDate(), y: 0 });
-                }
-            }
-        });
-        var max = d3.max(elements, function (d) { return d.x; });
-        var current = new Date();
-        if (max < current) {
-            var time = moment(max).add(duration).toDate();
-            elements.push({ x: time, y: 0 }, { x: current, y: 0 });
-        }
-        return elements;
-    },
-
     render: function() {
         var error = this.state.error,
             data = this.state.data;
@@ -92,11 +61,61 @@ var Metrics = React.createClass({
             return (<option value={x.Name} key={x.Name}>{x.Name}</option>);
         });
 
-        var graphSize = { height: 575, width: 975 };
         var chart = null;
         if (this.state.selectedMetric !== "") {
-            var measurements = this.mapMeasurement(this.state.selectedMetric);
-            chart = (<LineChart data={measurements} width={1000} height={600} graphSize={graphSize} />);
+            var name = this.state.selectedMetric;
+            var metric = _.find(this.state.data, function (x) {
+                return x.Name === name;
+            });
+            var measurements = _.map(metric.Measurements, function(elm) {
+                return { x: moment(elm.X).toDate(), y: elm.Y };
+            });
+            var margin = { top: 10, right: 20, left: 50, bottom: 30 };
+            var height = 600 - margin.top - margin.bottom;
+            var width = 1000 - margin.left - margin.right;
+
+            var xScale = d3.time.scale()
+                .range([0, width])
+                .domain(d3.extent(measurements, function (d) { return d.x; }));
+
+            var yScale = d3.scale.linear()
+                .range([height, 0])
+                .domain(d3.extent(measurements, function (d) { return d.y; }));
+
+            var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left");
+
+            var lineFunction = d3.svg.line()
+                .x(function(d) { return xScale(d.x); })
+                .y(function (d) { return yScale(d.y); });
+
+            var svg = d3.select(ReactFauxDOM.createElement("svg"))
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom);
+
+            var chart2 = svg.append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            chart2.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            chart2.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+
+            chart2.append("path")
+                .attr("class", "line")
+                .datum(measurements)
+                .attr("d", lineFunction);
+
+            chart = svg.node().toReact();
         }
 
         return (
